@@ -1,0 +1,23 @@
+.restaurants-table-container {
+  background-color: #fff;
+  padding: 16px;
+  width: 100%;
+}
+.restaurants-table {
+  border: 1px solid;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.restaurants-table thead tr th,
+.restaurants-table tbody tr td,
+.restaurants-table tfoot tr td {
+  padding: 12px;
+  border: 1px solid #ddd;
+}
+
+.no-restaurants {
+  text-align: center;
+  color: #e91e63;
+  font-weight: 500;
+}
