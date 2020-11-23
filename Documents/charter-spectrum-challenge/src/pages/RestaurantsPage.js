@@ -66,6 +66,18 @@ class RestaurantsPage extends Component {
     });
   };
 
+  handleSearch = searchText => {
+    let filteredRestaurantsList = this.state.restaurantsList.filter(
+      restaurant =>
+        restaurant.name.toLowerCase().indexOf(searchText.toLowerCase()) > -1 ||
+        restaurant.city.toLowerCase().indexOf(searchText.toLowerCase()) > -1 ||
+        restaurant.genre.toLowerCase().indexOf(searchText.toLowerCase()) > -1
+    );
+    this.setState({
+      filteredRestaurantsList
+    });
+  };
+
   render() {
     const { filteredRestaurantsList, statesList, genreList } = this.state;
     return (
@@ -75,6 +87,7 @@ class RestaurantsPage extends Component {
           onStateChange={this.handleStateChange}
           genreList={genreList}
           onGenreChange={this.handleGenreChange}
+          onSearch={this.handleSearch}
         />
         <RestaurantsTable restaurantsList={filteredRestaurantsList} />
       </div>

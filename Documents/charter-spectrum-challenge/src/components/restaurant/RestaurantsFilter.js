@@ -5,11 +5,34 @@ const RestaurantsFilter = ({
   statesList,
   onStateChange,
   genreList,
-  onGenreChange
+  onGenreChange,
+  onSearch
 }) => {
+  const handleKeyPress = event => {
+    if (event.key === "Enter") {
+      onSearch(event.target.value);
+    }
+  };
+
+  const handleChange = event => {
+    if (event.target.value === "") {
+      onSearch(event.target.value);
+    }
+  };
+
   return (
     <div className="restaurants-filter">
       <h3 className="filter-title">Filters</h3>
+      <div>
+        <label className="label">Search</label>
+        <input
+          type="text"
+          name="searchText"
+          className="search-box"
+          onChange={handleChange}
+          onKeyPress={handleKeyPress}
+        />
+      </div>
       <div>
         <label className="label">Filter By State</label>
         <select className="state-filter" onChange={onStateChange}>
