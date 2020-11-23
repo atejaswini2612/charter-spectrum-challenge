@@ -89,7 +89,10 @@ class RestaurantsPage extends Component {
           onGenreChange={this.handleGenreChange}
           onSearch={this.handleSearch}
         />
-        <RestaurantsTable restaurantsList={filteredRestaurantsList} />
+        <RestaurantsTable
+          restaurantsList={filteredRestaurantsList}
+          pageSize={10}
+        />
       </div>
     );
   }

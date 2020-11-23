@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./RestaurantsFilter.css";
 
 const RestaurantsFilter = ({
@@ -8,6 +8,7 @@ const RestaurantsFilter = ({
   onGenreChange,
   onSearch
 }) => {
+  const [searchText, setSearchText] = useState("");
   const handleKeyPress = event => {
     if (event.key === "Enter") {
       onSearch(event.target.value);
@@ -15,9 +16,15 @@ const RestaurantsFilter = ({
   };
 
   const handleChange = event => {
-    if (event.target.value === "") {
-      onSearch(event.target.value);
+    const { value } = event.target;
+    setSearchText(value);
+    if (value === "") {
+      onSearch(value);
     }
+  };
+
+  const handleSearch = () => {
+    onSearch(searchText);
   };
 
   return (
@@ -25,13 +32,18 @@ const RestaurantsFilter = ({
       <h3 className="filter-title">Filters</h3>
       <div>
         <label className="label">Search</label>
-        <input
-          type="text"
-          name="searchText"
-          className="search-box"
-          onChange={handleChange}
-          onKeyPress={handleKeyPress}
-        />
+        <div className="search-container">
+          <input
+            type="text"
+            name="searchText"
+            className="search-box"
+            onChange={handleChange}
+            onKeyPress={handleKeyPress}
+          />
+          <button className="search-btn" onClick={handleSearch}>
+            🔍
+          </button>
+        </div>
       </div>
       <div>
         <label className="label">Filter By State</label>

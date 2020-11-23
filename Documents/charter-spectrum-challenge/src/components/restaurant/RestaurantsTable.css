@@ -21,3 +21,42 @@
   color: #e91e63;
   font-weight: 500;
 }
+
+.next-btn,
+.prev-btn {
+  cursor: pointer;
+  color: #fff;
+  border-radius: 4px;
+  padding: 6px 12px;
+  margin-right: 8px;
+}
+
+.next-btn {
+  background-color: #e91e63;
+  border: 1px solid #d81b60;
+}
+
+.prev-btn {
+  background-color: #f44336;
+  border: 1px solid #e53935;
+}
+
+.next-btn:hover {
+  background-color: #d81b60;
+  font-weight: 600;
+}
+
+.prev-btn:hover {
+  background-color: #e53935;
+  font-weight: 600;
+}
+
+.prev-btn.disabled {
+  cursor: no-drop;
+  background-color: #ef9a9a;
+}
+
+.next-btn.disabled {
+  cursor: no-drop;
+  background-color: #f48fb1;
+}
