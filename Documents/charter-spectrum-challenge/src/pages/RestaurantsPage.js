@@ -10,7 +10,8 @@ class RestaurantsPage extends Component {
     this.state = {
       restaurantsList: [],
       filteredRestaurantsList: [],
-      statesList: []
+      statesList: [],
+      genreList: []
     };
   }
 
@@ -18,17 +19,24 @@ class RestaurantsPage extends Component {
     const restaurantsList = await getRestaurants();
     restaurantsList.sort((a, b) => (a.name > b.name ? 1 : -1));
     const filteredRestaurantsList = restaurantsList;
-    let statesList = [];
+    let statesList = [],
+      genreList = [];
     restaurantsList.forEach(restaurant => {
       if (statesList.indexOf(restaurant.state) === -1) {
         statesList.push(restaurant.state);
       }
+      if (genreList.indexOf(restaurant.genre) === -1) {
+        genreList.push(...restaurant.genre.split(","));
+      }
     });
     statesList.unshift("All");
+    let uniqueList = [...new Set(genreList)];
+    uniqueList.unshift("All");
     this.setState({
       restaurantsList,
       filteredRestaurantsList,
-      statesList
+      statesList,
+      genreList: uniqueList
     });
   }
 
@@ -45,13 +53,28 @@ class RestaurantsPage extends Component {
     });
   };
 
+  handleGenreChange = event => {
+    const { value } = event.target;
+    let filteredRestaurantsList = [...this.state.restaurantsList];
+    if (value !== "All") {
+      filteredRestaurantsList = this.state.restaurantsList.filter(
+        restaurant => restaurant.genre.indexOf(value) > -1
+      );
+    }
+    this.setState({
+      filteredRestaurantsList
+    });
+  };
+
   render() {
-    const { filteredRestaurantsList, statesList } = this.state;
+    const { filteredRestaurantsList, statesList, genreList } = this.state;
     return (
       <div className="restaurants-page">
         <RestaurantsFilter
           statesList={statesList}
           onStateChange={this.handleStateChange}
+          genreList={genreList}
+          onGenreChange={this.handleGenreChange}
         />
         <RestaurantsTable restaurantsList={filteredRestaurantsList} />
       </div>

@@ -1,7 +1,12 @@
 import React from "react";
 import "./RestaurantsFilter.css";
 
-const RestaurantsFilter = ({ statesList, onStateChange }) => {
+const RestaurantsFilter = ({
+  statesList,
+  onStateChange,
+  genreList,
+  onGenreChange
+}) => {
   return (
     <div className="restaurants-filter">
       <h3 className="filter-title">Filters</h3>
@@ -11,6 +16,16 @@ const RestaurantsFilter = ({ statesList, onStateChange }) => {
           {statesList.map((state, index) => (
             <option key={index} value={state}>
               {state}
+            </option>
+          ))}
+        </select>
+      </div>
+      <div>
+        <label className="label">Filter by Genre</label>
+        <select className="genre-filter" onChange={onGenreChange}>
+          {genreList.map((genre, index) => (
+            <option key={index} value={genre}>
+              {genre}
             </option>
           ))}
         </select>
