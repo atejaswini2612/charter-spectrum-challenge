@@ -9,22 +9,28 @@ const RestaurantsFilter = ({
   onSearch
 }) => {
   const [searchText, setSearchText] = useState("");
+  const [isDisableFilters, setIsDisableFilters] = useState(false);
   const handleKeyPress = event => {
     if (event.key === "Enter") {
-      onSearch(event.target.value);
+      onSearch(event.target.value, isDisableFilters);
     }
   };
 
   const handleChange = event => {
     const { value } = event.target;
-    setSearchText(value);
+    setSearchText(value, isDisableFilters);
     if (value === "") {
-      onSearch(value);
+      onSearch(value, isDisableFilters);
     }
   };
 
   const handleSearch = () => {
-    onSearch(searchText);
+    onSearch(searchText, isDisableFilters);
+  };
+
+  const handleCheckbox = event => {
+    const { checked } = event.target;
+    setIsDisableFilters(checked);
   };
 
   return (
@@ -46,8 +52,22 @@ const RestaurantsFilter = ({
         </div>
       </div>
       <div>
+        <label className="label checkobx">
+          <input
+            type="checkbox"
+            checked={isDisableFilters}
+            onChange={handleCheckbox}
+          />
+          Disable Filters
+        </label>
+      </div>
+      <div>
         <label className="label">Filter By State</label>
-        <select className="state-filter" onChange={onStateChange}>
+        <select
+          disabled={isDisableFilters}
+          className="state-filter"
+          onChange={event => onStateChange(event, searchText)}
+        >
           {statesList.map((state, index) => (
             <option key={index} value={state}>
               {state}
@@ -57,7 +77,11 @@ const RestaurantsFilter = ({
       </div>
       <div>
         <label className="label">Filter by Genre</label>
-        <select className="genre-filter" onChange={onGenreChange}>
+        <select
+          disabled={isDisableFilters}
+          className="genre-filter"
+          onChange={event => onGenreChange(event, searchText)}
+        >
           {genreList.map((genre, index) => (
             <option key={index} value={genre}>
               {genre}

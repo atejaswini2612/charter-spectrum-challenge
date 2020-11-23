@@ -40,7 +40,7 @@ class RestaurantsPage extends Component {
     });
   }
 
-  handleStateChange = event => {
+  handleStateChange = (event, searchText) => {
     const { value } = event.target;
     let filteredRestaurantsList = [...this.state.restaurantsList];
     if (value !== "All") {
@@ -48,12 +48,15 @@ class RestaurantsPage extends Component {
         restaurant => restaurant.state === value
       );
     }
-    this.setState({
-      filteredRestaurantsList
-    });
+    this.setState(
+      {
+        filteredRestaurantsList
+      },
+      () => this.handleSearch(searchText, false)
+    );
   };
 
-  handleGenreChange = event => {
+  handleGenreChange = (event, searchText) => {
     const { value } = event.target;
     let filteredRestaurantsList = [...this.state.restaurantsList];
     if (value !== "All") {
@@ -61,13 +64,21 @@ class RestaurantsPage extends Component {
         restaurant => restaurant.genre.indexOf(value) > -1
       );
     }
-    this.setState({
-      filteredRestaurantsList
-    });
+    this.setState(
+      {
+        filteredRestaurantsList
+      },
+      () => this.handleSearch(searchText, false)
+    );
   };
 
-  handleSearch = searchText => {
-    let filteredRestaurantsList = this.state.restaurantsList.filter(
+  handleSearch = (searchText, isDisableFilters) => {
+    let data = [...this.state.restaurantsList];
+
+    if (!isDisableFilters) {
+      data = [...this.state.filteredRestaurantsList];
+    }
+    let filteredRestaurantsList = data.filter(
       restaurant =>
         restaurant.name.toLowerCase().indexOf(searchText.toLowerCase()) > -1 ||
         restaurant.city.toLowerCase().indexOf(searchText.toLowerCase()) > -1 ||
